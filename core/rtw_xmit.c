@@ -912,7 +912,7 @@ static s32 update_attrib(_adapter *padapter, _pkt *pkt, struct pkt_attrib *pattr
 			res =_FAIL;
 			goto exit;
 		}
-		else if((check_fwstate(pmlmepriv, WIFI_AP_STATE)==_TRUE)&&(!(psta->state & _FW_LINKED)))
+		else if(check_fwstate(pmlmepriv, WIFI_AP_STATE)==_TRUE)
 		{
 			res =_FAIL;
 			goto exit;
@@ -929,11 +929,6 @@ static s32 update_attrib(_adapter *padapter, _pkt *pkt, struct pkt_attrib *pattr
 		goto exit;
 	}
 
-	if(!(psta->state &_FW_LINKED))
-	{
-		DBG_871X("%s, psta("MAC_FMT")->state(0x%x) != _FW_LINKED\n", __func__, MAC_ARG(psta->hwaddr), psta->state);
-		return _FAIL;
-	}
 
 
 
@@ -1357,11 +1352,6 @@ _func_enter_;
 				return _FAIL;
 			}
 
-			if(!(psta->state &_FW_LINKED))
-			{
-				DBG_871X("%s, psta->state(0x%x) != _FW_LINKED\n", __func__, psta->state);
-				return _FAIL;
-			}
 		
 			//if(psta)
 			{
@@ -1496,11 +1486,6 @@ s32 rtw_txframes_sta_ac_pending(_adapter *padapter, struct pkt_attrib *pattrib)
 		return 0;
 	}
 
-	if(!(psta->state &_FW_LINKED))
-	{
-		DBG_871X("%s, psta->state(0x%x) != _FW_LINKED\n", __func__, psta->state);
-		return 0;
-	}
 	
 	switch(priority) 
 	{
@@ -2959,11 +2944,6 @@ _func_enter_;
 		goto exit;
 	}
 
-	if(!(psta->state &_FW_LINKED))
-	{
-		DBG_871X("%s, psta->state(0x%x) != _FW_LINKED\n", __func__, psta->state);
-		return _FAIL;
-	}
 
 	ptxservq = rtw_get_sta_pending(padapter, psta, pattrib->priority, (u8 *)(&ac_index));
 
@@ -3542,11 +3522,6 @@ sint xmitframe_enqueue_for_sleeping_sta(_adapter *padapter, struct xmit_frame *p
 		return _FALSE;
 	}
 
-	if(!(psta->state &_FW_LINKED))
-	{
-		DBG_871X("%s, psta->state(0x%x) != _FW_LINKED\n", __func__, psta->state);
-		return _FALSE;
-	}
 
 	if(pattrib->triggered==1)
 	{
