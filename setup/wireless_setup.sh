@@ -1,6 +1,5 @@
 #!/bin/bash
 
-rpi-update
 apt-get install curl build-essential
 
 ls -l /lib/modules
@@ -19,7 +18,7 @@ tar --strip-components 1 -xf /home/pi/rpi-linux.tar.gz
 
 modprobe configs
 gunzip -c /proc/config.gz >.config
-cp $HOME/Module7.symvers Module.symvers
+cp /home/piE/Module7.symvers Module.symvers
 
 make modules_prepare
 ln -sv /usr/src/rpi-linux /lib/modules/$(uname -r)/build
